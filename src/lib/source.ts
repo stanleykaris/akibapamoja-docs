@@ -1,10 +1,12 @@
-import { docs } from '@/.source';
+import { docs, apiDocs } from '@/.source';
 import { type InferPageType, loader } from 'fumadocs-core/source';
+import { openapiPlugin } from 'fumadocs-openapi/server';
 
 // See https://fumadocs.vercel.app/docs/headless/source-api for more info
 export const source = loader({
   baseUrl: '/docs',
   source: docs.toFumadocsSource(),
+  plugins: [openapiPlugin()],
 });
 
 export function getPageImage(page: InferPageType<typeof source>) {

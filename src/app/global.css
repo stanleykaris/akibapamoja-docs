@@ -1,3 +1,9 @@
 @import 'tailwindcss';
 @import 'fumadocs-ui/css/neutral.css';
 @import 'fumadocs-ui/css/preset.css';
+@import 'fumadocs-openapi/css/preset.css';
+
+/* Custom navigation bar styling */
+[data-fumadocs-layout="docs"] [data-fumadocs-nav] {
+  background-color: #4B189B !important;
+}
