@@ -1,12 +1,30 @@
 ---
-title: Akiba Pamoja API Docs
+title: Getting Started
 description: Build with confidence using the AkibaPamoja APIs
 ---
 
+Welcome to the AkibaPamoja API. This page helps you get productive fast: set up authentication, make your first request, and understand responses and errors.
 
+What you'll do in ~5 minutes:
+- Configure your API key
+- Create your first contribution
+- Inspect the response and handle errors
+
+## Prerequisites
+- An AkibaPamoja account and API key from your dashboard
+- A terminal with curl or a language runtime (Node.js 18+ or Python 3.9+)
+- The API base URL for your environment
+
+> Tip: Keep secrets out of source control. Use environment variables or a secure secret manager in development and CI.
+
+## Authentication
+All requests use Bearer auth via the Authorization header.
+
+```http
+Authorization: Bearer YOUR_API_KEY
+```
 
 ## Quickstart
-
 Create a contribution with a single request.
 
 <div className="mt-4 rounded-xl border border-[#4B189B] bg-black/50 shadow-[0_0_50px_-10px_rgba(75,24,155,0.6)]">
@@ -19,3 +37,112 @@ Create a contribution with a single request.
     <span className="text-xs sm:text-sm text-white/80">POST /contributions/</span>
   </div>
 </div>
+
+### cURL
+```bash
+curl -X POST "$AKIBA_BASE_URL/contributions/" \
+  -H "Authorization: Bearer $AKIBA_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "memberId": "mem_123",
+    "amount": 1000,
+    "currency": "KES",
+    "notes": "October 2025 cycle"
+  }'
+```
+
+### JavaScript (Node.js / TypeScript)
+```ts
+const res = await fetch(`${process.env.AKIBA_BASE_URL}/contributions/`, {
+  method: "POST",
+  headers: {
+    Authorization: `Bearer ${process.env.AKIBA_API_KEY}`,
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    memberId: "mem_123",
+    amount: 1000,
+    currency: "KES",
+    notes: "October 2025 cycle",
+  }),
+});
+
+if (!res.ok) {
+  const err = await res.text();
+  throw new Error(`Request failed (${res.status}): ${err}`);
+}
+
+const contribution = await res.json();
+console.log(contribution.id);
+```
+
+### Python (requests)
+```py
+import os
+import requests
+
+resp = requests.post(
+    url=f"{os.environ['AKIBA_BASE_URL']}/contributions/",
+    headers={
+        "Authorization": f"Bearer {os.environ['AKIBA_API_KEY']}",
+        "Content-Type": "application/json",
+    },
+    json={
+        "memberId": "mem_123",
+        "amount": 1000,
+        "currency": "KES",
+        "notes": "October 2025 cycle",
+    },
+)
+
+resp.raise_for_status()
+print(resp.json())
+```
+
+### Example success response
+```json
+{
+  "id": "ctrb_01J9VK0YZS5Y8K3H4A8Z7WQ2NQ",
+  "memberId": "mem_123",
+  "amount": 1000,
+  "currency": "KES",
+  "status": "succeeded",
+  "createdAt": "2025-10-04T20:10:22Z"
+}
+```
+
+- id: Unique identifier for the contribution
+- status: Current processing state (e.g., pending, succeeded, failed)
+
+## Handling errors
+AkibaPamoja uses standard HTTP status codes. On errors, the response includes an error object.
+
+```json
+{
+  "error": {
+    "code": "invalid_request",
+    "message": "memberId is required",
+    "requestId": "req_01J9VJZ8B9T7X4"
+  }
+}
+```
+
+- 400 Bad Request: Your parameters are invalid
+- 401 Unauthorized: Your API key is missing or incorrect
+- 403 Forbidden: The key doesn't have access to the resource
+- 404 Not Found: The resource doesn't exist
+- 409 Conflict: A resource already exists or state conflict
+- 429 Too Many Requests: You have hit a rate limit; respect the Retry-After header
+- 5xx: Temporary server error; retry with exponential backoff
+
+> Tip: Log the requestId returned in error responses to help Support locating requests quickly.
+
+## Pagination and filtering
+List endpoints return many items. Use query parameters like limit and offset (or cursors) to page through results, and filter parameters to narrow the response. Always prefer server-side filtering to reduce payload size and latency.
+
+## Going further
+- Explore the endpoints in the left navigation when you're ready to go deeper
+- Use sandbox credentials in development; swap to live keys only when you are ready to go live
+- Keep your integration idempotent for create operations to avoid duplicate submissions
+
+If you get stuck, open a ticket from your dashboard with the requestId and timestamp, and we'll help you get unblocked quickly.

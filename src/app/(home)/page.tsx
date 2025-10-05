@@ -54,8 +54,7 @@ export default function HomePage() {
   };
 
   return (
-    <>
-      <main id="main" className="min-h-screen bg-white text-slate-900 dark:bg-[#0b0718] dark:text-white">
+    <main id="main" className="min-h-screen bg-white text-[#0f172a] dark:bg-[#0b0718] dark:text-white">
         {/* Hero */}
         <section className="relative">
           <div className="mx-auto max-w-7xl px-4 md:px-8 py-20 text-center">
@@ -64,10 +63,10 @@ export default function HomePage() {
               Developer Platform
             </span>
 
-            <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-slate-900 dark:text-white">
+            <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#0f172a] dark:text-white">
               Build with confidence using
               <span className="block bg-gradient-to-r from-[#4B189B] to-[#BFA4FF] dark:from-white dark:to-[#BFA4FF] bg-clip-text text-transparent">
-                AkibaPamoja APIs
+                 AkibaPamoja APIs
               </span>
             </h1>
 
@@ -175,10 +174,10 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Endpoints overview */}
+        {/* Endpoint overview */}
         <section id="endpoints" className="mx-auto max-w-7xl px-4 md:px-8 py-16">
           <div className="mb-8 flex items-center justify-between">
-            <h2 className="text-2xl sm:text-3xl font-semibold text-slate-900 dark:text-white">
+            <h2 className="text-2xl sm:text-3xl font-semibold text-[#0f172a] dark:text-white">
               Explore endpoints
             </h2>
             <Link
@@ -207,7 +206,7 @@ export default function HomePage() {
                       </span>
                       <span className="text-slate-600 dark:text-white/70">{ep.path}</span>
                     </div>
-                    <h3 className="mt-2 text-lg font-semibold text-slate-900 dark:text-white">{ep.title}</h3>
+                    <h3 className="mt-2 text-lg font-semibold text-[#0f172a] dark:text-white">{ep.title}</h3>
                     <p className="mt-1 text-sm text-slate-600 dark:text-white/70">{ep.description}</p>
                   </div>
                 </div>
@@ -223,6 +222,5 @@ export default function HomePage() {
           </div>
         </footer>
       </main>
-    </>
   );
 }
