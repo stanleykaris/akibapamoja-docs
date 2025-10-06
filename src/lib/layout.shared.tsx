@@ -1,5 +1,7 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 import { FileText } from 'lucide-react';
+import Image from 'next/image';
+import Logo from '../../images/Akiba-Pamoja.svg';
 
 /**
  * Shared layout configurations
@@ -12,17 +14,19 @@ export function baseOptions(): BaseLayoutProps {
   return {
     nav: {
       title: (
-        <>
-          <svg
-            width="24"
-            height="24"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-label="Logo"
-          >
-            <circle cx={12} cy={12} r={12} fill="currentColor" />
-          </svg>
-          Akiba Pamoja
-        </>
+        <span className="inline-flex items-center gap-2">
+          <span className="rounded-md p-0.5">
+            <Image
+              src={Logo}
+              alt="Logo"
+              width={56}
+              height={56}
+              priority
+              className="block"
+            />
+          </span>
+          <span>AkibaPamoja</span>
+        </span>
       ),
     },
     // see https://fumadocs.dev/docs/ui/navigation/links
@@ -30,7 +34,8 @@ export function baseOptions(): BaseLayoutProps {
       {
         text: "Documentation",
         url: "/docs",
-        icon: <FileText />, 
+        icon: <FileText />,
+        active: "nested-url",
       },
     ],
   };

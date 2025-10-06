@@ -1,8 +1,12 @@
 import { createOpenAPI } from 'fumadocs-openapi/server';
 
-const OPENAPI_URL = 'https://akibapamoja-backend.onrender.com/?format=openapi';
+const OPENAPI_URL = process.env.NEXT_PUBLIC_OPENAPI_URL || 'https://akibapamoja-backend.onrender.com/?format=openapi';
 
 async function verifyOpenApiSource(url: string): Promise<void> {
+  if (!url.includes('://')) {
+    return;
+  }
+
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 10_000);
   try {
@@ -46,6 +50,5 @@ async function verifyOpenApiSource(url: string): Promise<void> {
 void verifyOpenApiSource(OPENAPI_URL);
 
 export const openapi = createOpenAPI({
-    input: [OPENAPI_URL],
-    
+  input: [OPENAPI_URL],
 });

@@ -7,7 +7,11 @@ import { openapi } from './lib/openapi';
 export function getMDXComponents(components?: MDXComponents): MDXComponents {
   return {
     ...defaultMdxComponents,
-    APIPage: (props) => <APIPage {...openapi.getAPIPageProps(props)}/>,
+    APIPage: (props) => {
+      // Use environment variable for OpenAPI URL, fallback to remote backend
+      const documentUrl = process.env.NEXT_PUBLIC_OPENAPI_URL || 'https://akibapamoja-backend.onrender.com/?format=openapi';
+      return <APIPage {...openapi.getAPIPageProps({...props, document: documentUrl})}/>;
+    },
     ...components,
   };
 }

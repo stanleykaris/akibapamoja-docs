@@ -66,7 +66,7 @@ export default function HomePage() {
             <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#0f172a] dark:text-white">
               Build with confidence using
               <span className="block bg-gradient-to-r from-[#4B189B] to-[#BFA4FF] dark:from-white dark:to-[#BFA4FF] bg-clip-text text-transparent">
-                 AkibaPamoja APIs
+                AkibaPamoja APIs
               </span>
             </h1>
 

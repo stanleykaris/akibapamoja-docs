@@ -1,4 +1,4 @@
-import { docs, apiDocs } from '@/.source';
+import { docs } from '@/.source';
 import { type InferPageType, loader } from 'fumadocs-core/source';
 import { openapiPlugin } from 'fumadocs-openapi/server';
 

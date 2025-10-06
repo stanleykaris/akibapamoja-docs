@@ -1,8 +1,9 @@
 import { writeFileSync } from "fs";
-import { generateFiles, createOpenAPI } from "fumadocs-openapi";
+import { generateFiles} from "fumadocs-openapi";
+import { createOpenAPI } from "fumadocs-openapi/server";
 import { join } from "path";
 
-const OPENAPI_URL = "https://akibapamoja-backend.onrender.com/?format=openapi";
+const OPENAPI_URL = process.env.OPENAPI_SOURCE_URL || "https://akibapamoja-backend.onrender.com/?format=openapi";
 
 async function updateDocs() {
     try {
