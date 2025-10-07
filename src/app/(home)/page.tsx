@@ -54,7 +54,7 @@ export default function HomePage() {
   };
 
   return (
-    <main id="main" className="min-h-screen bg-white text-[#0f172a] dark:bg-[#0b0718] dark:text-white">
+    <main id="main" className="min-h-screen bg-white text-[#0f172a] dark:bg-zinc-950 dark:text-white">
         {/* Hero */}
         <section className="relative">
           <div className="mx-auto max-w-7xl px-4 md:px-8 py-20 text-center">

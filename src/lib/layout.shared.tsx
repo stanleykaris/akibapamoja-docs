@@ -23,6 +23,7 @@ export function baseOptions(): BaseLayoutProps {
               height={56}
               priority
               className="block"
+              suppressHydrationWarning={true}
             />
           </span>
           <span>AkibaPamoja</span>
