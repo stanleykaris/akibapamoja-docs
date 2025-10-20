@@ -1,7 +1,7 @@
-import { writeFileSync } from "fs";
+import { writeFileSync } from "node:fs";
 import { generateFiles} from "fumadocs-openapi";
 import { createOpenAPI } from "fumadocs-openapi/server";
-import { join } from "path";
+import path from "node:path";
 
 const OPENAPI_URL = process.env.OPENAPI_SOURCE_URL || "https://akibapamoja-backend.onrender.com/?format=openapi";
 
@@ -18,7 +18,7 @@ async function updateDocs() {
         const openapiJson = await response.json();
 
         // Save the JSON to a file for reference
-        const localPath = join(process.cwd(), 'openapi.json');
+        const localPath = path.join(process.cwd(), 'openapi.json');
         writeFileSync(localPath, JSON.stringify(openapiJson, null, 2));
         console.log('OpenAPI spec saved to openapi.json');
 
