@@ -41,4 +41,9 @@ async function updateDocs() {
     }
 }
 
-updateDocs();
+try {
+    await updateDocs();
+} catch (error) {
+    console.error('Unhandled error:', error);
+    process.exit(1);
+}
