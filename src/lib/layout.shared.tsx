@@ -1,7 +1,7 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 import { FileText } from 'lucide-react';
 import Image from 'next/image';
-import Logo from '../../images/Akiba-Pamoja.svg';
+const Logo = '/Akiba-Pamoja.svg';
 
 /**
  * Shared layout configurations
