@@ -84,9 +84,11 @@ async function generateDocs() {
     }
 }
 
-try {
-    await generateDocs();
-} catch (error) {
-    console.error('Error generating API docs:', error);
-    process.exit(1);
-}
+(async () => {
+    try {
+        await generateDocs();
+    } catch (error) {
+        console.error('Error generating API docs:', error);
+        process.exit(1);
+    }
+})();

@@ -1,7 +1,7 @@
 import '@/app/global.css';
 import { RootProvider } from 'fumadocs-ui/provider';
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: { readonly children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
