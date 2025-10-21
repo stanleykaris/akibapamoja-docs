@@ -84,6 +84,4 @@ async function generateDocs() {
     }
 }
 
-(async () => {
-    await generateDocs();
-})();
+await generateDocs();
