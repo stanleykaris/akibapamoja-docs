@@ -9,6 +9,7 @@ const config = {
   turbopack: {
     root: '/home/stanoriz/Documents/Projects/akibapamoja-docs',
   },
+  serverExternalPackages: ['fumadocs-openapi', 'xml-js'],
   webpack: (config, {dev}) => {
     if (dev) {
       config.watchOptions = {

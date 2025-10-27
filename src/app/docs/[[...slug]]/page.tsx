@@ -33,6 +33,9 @@ export default async function Page(props: { params: Promise<{ slug?: string[] }>
   );
 }
 
+// Force dynamic rendering for API documentation pages
+export const dynamic = 'force-dynamic';
+
 export async function generateStaticParams() {
   return source.generateParams();
 }
