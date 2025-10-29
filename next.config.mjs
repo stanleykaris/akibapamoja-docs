@@ -13,7 +13,7 @@ const config = {
   turbopack: {
     root: '/home/stanoriz/Documents/Projects/akibapamoja-docs',
   },
-  serverExternalPackages: ['fumadocs-openapi', 'xml-js'],
+  serverExternalPackages: [],
   webpack: (config, {dev}) => {
     if (dev) {
       config.watchOptions = {
@@ -22,11 +22,6 @@ const config = {
         ignored: ['node_modules/**/*', 'build/**/*', 'public/**/*'],
       }
     }
-    // Fix for xml-js module resolution in Fumadocs OpenAPI
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      'xml-js/lib/js2xml': require.resolve('xml-js/lib/js2xml.js'),
-    };
     return config;
   }
 };
