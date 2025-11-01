@@ -12,8 +12,8 @@
     "update-docs": "echo 'OpenAPI docs update disabled'"
   },
   "dependencies": {
-    "fumadocs-core": "15.8.1",
-    "fumadocs-mdx": "12.0.1",
+    "fumadocs-core": "^15.8.1",
+    "fumadocs-mdx": "^12.0.1",
     "fumadocs-ui": "15.8.1",
     "lucide-react": "^0.544.0",
     "next": "15.5.4",

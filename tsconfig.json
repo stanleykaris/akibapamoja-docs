@@ -21,7 +21,8 @@
     "incremental": true,
     "paths": {
       "@/.source": [
-        "./.source/index.ts"
+        "./.source/index.ts",
+        "./.source"
       ],
       "@/*": [
         "./src/*"
