@@ -8,7 +8,7 @@ const withMDX = createMDX();
 const config = {
   reactStrictMode: true,
   turbopack: {
-    root: '/home/stanoriz/Documents/Projects/akibapamoja-docs',
+    root: '.',
   },
   serverExternalPackages: [],
   webpack: (config, {dev}) => {
