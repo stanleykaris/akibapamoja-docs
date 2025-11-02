@@ -1,6 +1,8 @@
-export const dynamic = 'force-dynamic';
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
-import { User, Users, HandCoins, BookOpen, Code2, ArrowRight } from 'lucide-react';
+import { User, Users, HandCoins, BookOpen, Code2, ArrowRight, Clipboard, Check } from 'lucide-react';
 
 export default function HomePage() {
   const endpoints = [
@@ -30,6 +32,27 @@ export default function HomePage() {
     },
   ];
 
+  const curlExample = `curl -X POST "https://akibapamoja-backend.onrender.com/contributions/" \\
+  -H "Content-Type: application/json" \\
+  -H "Authorization: Bearer YOUR_API_KEY" \\
+  -d '{
+    "amount": 1000,
+    "member": 123,
+    "group": 456,
+    "date": "2025-10-03"
+  }'`;
+
+  const [copied, setCopied] = useState(false);
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(curlExample);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // no-op
+    }
+  };
+
   return (
     <main id="main" className="min-h-screen bg-white text-[#0f172a] dark:bg-zinc-950 dark:text-white">
         {/* Hero */}
@@ -41,7 +64,8 @@ export default function HomePage() {
             </span>
 
             <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#0f172a] dark:text-white">
-              Build with confidence using<span className="block bg-gradient-to-r from-[#4B189B] to-[#BFA4FF] dark:from-white dark:to-[#BFA4FF] bg-clip-text text-transparent">
+              Build with confidence using
+              <span className="block bg-gradient-to-r from-[#4B189B] to-[#BFA4FF] dark:from-white dark:to-[#BFA4FF] bg-clip-text text-transparent">
                 AkibaPamoja APIs
               </span>
             </h1>
@@ -86,11 +110,13 @@ export default function HomePage() {
               </span>
               <button
                 type="button"
+                onClick={copy}
                 className="inline-flex items-center gap-1.5 rounded-md border border-slate-300 bg-white px-2.5 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#4B189B] focus-visible:ring-offset-slate-50 dark:border-white/20 dark:bg-white/10 dark:text-white/90 dark:hover:bg-white/15 dark:focus-visible:ring-offset-black"
-                aria-label="Copy code to clipboard"
-                title="Copy"
+                aria-label={copied ? 'Copied' : 'Copy code to clipboard'}
+                title={copied ? 'Copied' : 'Copy'}
               >
-                Copy
+                {copied ? <Check className="h-3.5 w-3.5" aria-hidden="true" /> : <Clipboard className="h-3.5 w-3.5" aria-hidden="true" />}
+                <span>{copied ? 'Copied' : 'Copy'}</span>
               </button>
             </div>
 

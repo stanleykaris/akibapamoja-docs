@@ -1,5 +1,5 @@
 import { createMDX } from 'fumadocs-mdx/next';
-import path from 'node:path';
+
 
 const withMDX = createMDX();
 
@@ -19,12 +19,6 @@ const config = {
         ignored: ['node_modules/**/*', 'build/**/*', 'public/**/*'],
       }
     }
-    // Add webpack alias to resolve useEffectEvent
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      'react': path.resolve(process.cwd(), 'node_modules/react'),
-      'react-dom': path.resolve(process.cwd(), 'node_modules/react-dom'),
-    };
     return config;
   }
 };
