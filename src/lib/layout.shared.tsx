@@ -39,5 +39,5 @@ export function baseOptions(): BaseLayoutProps {
         active: "nested-url",
       },
     ],
-  };
+  } as BaseLayoutProps;
 }
