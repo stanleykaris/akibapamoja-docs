@@ -7,6 +7,7 @@ const inter = Inter({
   variable: '--font-inter',
   display: 'swap',
   preload: false,
+  fallback: ['system-ui', 'sans-serif'],
 });
 
 export default function Layout({ children }: { readonly children: React.ReactNode }) {
