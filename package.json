@@ -18,8 +18,8 @@
     "fumadocs-ui": "^15.8.1",
     "lucide-react": "^0.545.0",
     "next": "15.5.4",
-    "react": "^19.3.0-canary-561ee24d-20251101",
-    "react-dom": "^19.3.0-canary-561ee24d-20251101",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "shiki": "^3.13.0",
     "tsx": "^4.20.6",
     "xml-js": "^1.6.11"
