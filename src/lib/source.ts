@@ -8,6 +8,18 @@ export const source = loader({
   plugins: [],
 });
 
+// Add error handling for getPages
+const originalGetPages = source.getPages;
+source.getPages = () => {
+  try {
+    const pages = originalGetPages();
+    return Array.isArray(pages) ? pages : [];
+  } catch (error) {
+    console.error('Error getting pages:', error);
+    return [];
+  }
+};
+
 export function getPageImage(page: InferPageType<typeof source>) {
   const segments = [...page.slugs, 'image.png'];
 

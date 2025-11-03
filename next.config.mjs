@@ -8,7 +8,7 @@ const withMDX = createMDX();
 const config = {
   reactStrictMode: true,
   turbopack: {
-    root: '.',
+    root: process.cwd(),
   },
   serverExternalPackages: [],
   webpack: (config, {dev}) => {
