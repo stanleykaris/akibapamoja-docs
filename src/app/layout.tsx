@@ -11,7 +11,7 @@ const inter = Inter({
 
 export default function Layout({ children }: { readonly children: React.ReactNode }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={inter.variable} suppressHydrationWarning={true}>
       <head>
         <title>Akiba Pamoja Docs</title>
       </head>
