@@ -7,6 +7,7 @@ const withMDX = createMDX();
 /** @type {import('next').NextConfig} */
 const config = {
   reactStrictMode: true,
+  outputFileTracingRoot: process.cwd(),
   turbopack: {
     root: process.cwd(),
   },
