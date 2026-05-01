@@ -1,9 +1,11 @@
 ---
-title: "Users_otp_send"
+title: "Send OTP"
 full: true
 ---
 
-# Users_otp_send
+# Send OTP
+
+Sends a one-time password (OTP) to the user's registered phone number or email address for verification.
 
 ## Endpoint
 
@@ -11,14 +13,53 @@ full: true
 POST /users/otp/send/
 ```
 
-## Description
+## Request Body
 
-API documentation for this endpoint will be added manually.
+| Field    | Type   | Required | Description                        |
+|----------|--------|----------|------------------------------------|
+| `identifier` | string | Yes   | Phone number or email to send OTP to |
+| `channel` | string | No     | Delivery channel: `sms` or `email`. Defaults to `sms` |
 
-## Request
+### Example
 
-Details pending.
+```json
+{
+  "identifier": "+254712345678",
+  "channel": "sms"
+}
+```
+
+```bash
+curl -X POST https://akibapamoja-backend.onrender.com/api/users/otp/send/ \
+  -H "Content-Type: application/json" \
+  -d '{"identifier": "+254712345678", "channel": "sms"}'
+```
 
 ## Response
 
-Details pending.
+### 200 OK
+
+OTP sent successfully.
+
+```json
+{
+  "message": "OTP has been sent successfully.",
+  "expires_in": 300
+}
+```
+
+### 400 Bad Request
+
+Invalid identifier or rate limit exceeded.
+
+```json
+{
+  "detail": "Too many OTP requests. Please try again later."
+}
+```
+
+## Notes
+
+- OTPs expire after **5 minutes** (300 seconds).
+- Rate limiting applies to prevent abuse.
+- After receiving the OTP, use the [Verify OTP](/docs/api/users_otp_verify) endpoint to complete verification.

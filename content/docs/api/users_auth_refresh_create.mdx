@@ -1,9 +1,11 @@
 ---
-title: "Users_auth_refresh_create"
+title: "Refresh Token"
 full: true
 ---
 
-# Users_auth_refresh_create
+# Refresh Token
+
+Exchanges a valid refresh token for a new access token. Use this to maintain a session without requiring the user to log in again.
 
 ## Endpoint
 
@@ -11,14 +13,51 @@ full: true
 POST /users/auth/refresh/
 ```
 
-## Description
+## Request Body
 
-API documentation for this endpoint will be added manually.
+| Field     | Type   | Required | Description              |
+|-----------|--------|----------|--------------------------|
+| `refresh` | string | Yes      | A valid refresh token    |
 
-## Request
+### Example
 
-Details pending.
+```json
+{
+  "refresh": "eyJhbGciOiJIUzI1NiIs..."
+}
+```
+
+```bash
+curl -X POST https://akibapamoja-backend.onrender.com/api/users/auth/refresh/ \
+  -H "Content-Type: application/json" \
+  -d '{"refresh": "eyJhbGciOiJIUzI1NiIs..."}'
+```
 
 ## Response
 
-Details pending.
+### 200 OK
+
+Returns a new access token. May also include a new refresh token if token rotation is enabled.
+
+```json
+{
+  "access": "eyJhbGciOiJIUzI1NiIs..."
+}
+```
+
+### 401 Unauthorized
+
+Refresh token is expired, revoked, or invalid.
+
+```json
+{
+  "detail": "Token is invalid or expired"
+}
+```
+
+## Token Lifecycle
+
+1. User logs in via [Obtain Token Pair](/docs/api/users_auth_obtain-pair_create) — receives `access` + `refresh`.
+2. Access token is used for API calls until it expires.
+3. When access token expires, call this endpoint with the `refresh` token.
+4. If refresh token expires, the user must log in again.
