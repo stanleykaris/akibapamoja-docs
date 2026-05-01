@@ -1,9 +1,11 @@
 ---
-title: "Users_auth_obtain pair_create"
+title: "Obtain Token Pair"
 full: true
 ---
 
-# Users_auth_obtain pair_create
+# Obtain Token Pair
+
+Retrieves a new access and refresh token pair using user credentials. This is the primary authentication endpoint.
 
 ## Endpoint
 
@@ -11,14 +13,52 @@ full: true
 POST /users/auth/obtain-pair/
 ```
 
-## Description
+## Request Body
 
-API documentation for this endpoint will be added manually.
+| Field    | Type   | Required | Description                    |
+|----------|--------|----------|--------------------------------|
+| `email`  | string | Yes      | User's registered email address |
+| `password` | string | Yes    | User's password                |
 
-## Request
+### Example
 
-Details pending.
+```json
+{
+  "email": "user@example.com",
+  "password": "securepassword123"
+}
+```
+
+```bash
+curl -X POST https://akibapamoja-backend.onrender.com/api/users/auth/obtain-pair/ \
+  -H "Content-Type: application/json" \
+  -d '{"email": "user@example.com", "password": "securepassword123"}'
+```
 
 ## Response
 
-Details pending.
+### 200 OK
+
+Returns both tokens on successful authentication.
+
+```json
+{
+  "access": "eyJhbGciOiJIUzI1NiIs...",
+  "refresh": "eyJhbGciOiJIUzI1NiIs..."
+}
+```
+
+### 400 Bad Request
+
+Invalid credentials or missing fields.
+
+```json
+{
+  "detail": "No active account found with the given credentials"
+}
+```
+
+## Token Usage
+
+- **Access Token**: Include in `Authorization: Bearer <token>` header for authenticated API calls. Short-lived.
+- **Refresh Token**: Use with the [Refresh Token](/docs/api/users_auth_refresh_create) endpoint to get a new access token without re-authenticating.
