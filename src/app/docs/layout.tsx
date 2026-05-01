@@ -1,18 +1,9 @@
-import type { ReactNode } from 'react';
-import { DocsLayout } from 'fumadocs-ui/layouts/docs';
-import { baseOptions } from '@/lib/layout.shared';
-import { source } from '@/lib/source';
-
-export default function Layout({ children }: { readonly children: ReactNode }) {
+export default function Layout({ children }: { readonly children: React.ReactNode }) {
   return (
-    <DocsLayout
-      tree={source.pageTree}
-      {...baseOptions()}
-      sidebar={{
-        collapsible: true,
-      }}
-    >
-      {children}
-    </DocsLayout>
+    <div className="min-h-screen bg-white text-[#0f172a] dark:bg-zinc-950 dark:text-white">
+      <div className="max-w-4xl mx-auto p-8">
+        {children}
+      </div>
+    </div>
   );
 }

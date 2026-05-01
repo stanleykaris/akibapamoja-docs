@@ -1,17 +1,9 @@
 import defaultMdxComponents from 'fumadocs-ui/mdx';
-import { resolve } from 'node:path';
-import { createAPIPage } from 'fumadocs-openapi/ui';
-import { openapi } from './lib/openapi';
+import type { MDXComponents } from 'mdx/types';
 
-const APIPage = createAPIPage(openapi);
-const specPath = resolve(process.cwd(), 'public/api/openapi.json');
-
-export function getMDXComponents(): Record<string, React.ComponentType<any>> {
+export function getMDXComponents(components?: MDXComponents): MDXComponents {
   return {
     ...defaultMdxComponents,
-    APIPage: (props: Record<string, unknown>) => {
-      const { document: _doc, ...rest } = props;
-      return <APIPage document={specPath} {...rest} />;
-    },
+    ...components,
   };
 }

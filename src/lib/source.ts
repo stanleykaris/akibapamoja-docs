@@ -1,21 +1,38 @@
-import { docs } from '../../.source/server';
-import { loader } from 'fumadocs-core/source';
-import { openapiPlugin, openapiSource } from 'fumadocs-openapi/server';
-import { openapi } from './openapi';
+import { docs } from '@/.source';
+import { type InferPageType, loader } from 'fumadocs-core/source';
 
-const openapiFiles = await openapiSource(openapi, {
-  baseDir: 'api',
+// See https://fumadocs.vercel.app/docs/headless/source-api for more info
+export const source = loader({
+  baseUrl: '/docs',
+  source: docs.toFumadocsSource(),
+  plugins: [],
 });
 
-export const source = loader(
-  {
-    docs: docs.toFumadocsSource(),
-    api: openapiFiles,
-  },
-  {
-    baseUrl: '/docs',
-    plugins: [
-      openapiPlugin(),
-    ],
+// Add error handling for getPages
+const originalGetPages = source.getPages;
+source.getPages = () => {
+  try {
+    const pages = originalGetPages();
+    return Array.isArray(pages) ? pages : [];
+  } catch (error) {
+    console.error('Error getting pages:', error);
+    return [];
   }
-);
+};
+
+export function getPageImage(page: InferPageType<typeof source>) {
+  const segments = [...page.slugs, 'image.png'];
+
+  return {
+    segments,
+    url: `/og/docs/${segments.join('/')}`,
+  };
+}
+
+export async function getLLMText(page: InferPageType<typeof source>) {
+  const processed = await page.data.getText('processed');
+
+  return `# ${page.data.title} (${page.url})
+
+${processed}`;
+}
