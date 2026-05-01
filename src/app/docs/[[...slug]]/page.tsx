@@ -1,89 +1,25 @@
-import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
-import { DocsPage, DocsBody, DocsTitle, DocsDescription } from 'fumadocs-ui/page';
-import { source } from '@/lib/source';
-import { getMDXComponents } from '@/mdx-components';
-import { createAPIPage } from 'fumadocs-openapi/ui';
-import { openapi } from '@/lib/openapi';
+import Link from 'next/link';
 
-interface PageProps {
-  params: Promise<{ slug: string[] }>;
-}
-
-interface PageData {
-  title?: string;
-  description?: string;
-  full?: boolean;
-  toc?: Array<{ title: string; url: string; depth: number }>;
-  body?: React.ComponentType<{ components?: Record<string, React.ComponentType<{}>> }>;
-  _openapi?: { method?: string; webhook?: boolean };
-  getAPIPageProps?: () => { document: string; operations?: Array<{ path: string; method: string }> };
-}
-
-const APIPage = createAPIPage(openapi);
-
-export default async function Page(props: Readonly<PageProps>) {
-  const { slug } = await props.params;
-  const page = source.getPage(slug);
-
-  if (!page) {
-    notFound();
-  }
-
-  const data = page.data as PageData;
-  const toc = data.toc ?? [];
-
-  // Handle OpenAPI virtual pages
-  if (data._openapi && data.getAPIPageProps) {
-    const apiProps = data.getAPIPageProps();
-    return (
-      <DocsPage toc={toc} full={data.full}>
-        <DocsTitle>{data.title}</DocsTitle>
-        {data.description && (
-          <DocsDescription>{data.description}</DocsDescription>
-        )}
-        <DocsBody>
-          <APIPage {...(apiProps as any)} />
-        </DocsBody>
-      </DocsPage>
-    );
-  }
-
-  const MDX = data.body;
-  if (!MDX) {
-    notFound();
-  }
-
+export default function Page() {
   return (
-    <DocsPage toc={toc} full={data.full}>
-      <DocsTitle>{data.title}</DocsTitle>
-      {data.description && (
-        <DocsDescription>{data.description}</DocsDescription>
-      )}
-      <DocsBody>
-        <MDX components={getMDXComponents()} />
-      </DocsBody>
-    </DocsPage>
+    <div className="min-h-screen bg-white text-[#0f172a] dark:bg-zinc-950 dark:text-white p-8">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold mb-4">Documentation</h1>
+        <p className="text-lg mb-8">
+          The documentation system is currently being updated. Please check back later.
+        </p>
+        <div className="bg-slate-50 dark:bg-slate-800 p-6 rounded-lg">
+          <h2 className="text-xl font-semibold mb-2">Available Pages</h2>
+          <ul className="list-disc list-inside space-y-1">
+            <li><Link href="/" className="text-blue-600 hover:underline">Home</Link></li>
+            <li><Link href="/docs" className="text-blue-600 hover:underline">Documentation Index</Link></li>
+          </ul>
+        </div>
+      </div>
+    </div>
   );
 }
 
-export async function generateStaticParams() {
-  return source.getPages().map((page) => ({
-    slug: page.slugs,
-  }));
-}
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
 
-export async function generateMetadata(props: PageProps): Promise<Metadata> {
-  const { slug } = await props.params;
-  const page = source.getPage(slug);
-
-  if (!page) {
-    return {};
-  }
-
-  const data = page.data as PageData;
-  return {
-    title: data.title,
-    description: data.description,
-  };
-}
