@@ -1,9 +1,11 @@
 ---
-title: "Users_auth_logout"
+title: "Logout"
 full: true
 ---
 
-# Users_auth_logout
+# Logout
+
+Ends the current user session by invalidating their access and refresh tokens.
 
 ## Endpoint
 
@@ -11,14 +13,42 @@ full: true
 POST /users/auth/logout/
 ```
 
-## Description
+## Authentication
 
-API documentation for this endpoint will be added manually.
+Requires a valid **Access Token** in the `Authorization` header.
 
 ## Request
 
-Details pending.
+No request body is required. The endpoint derives the user from the authenticated token.
+
+```bash
+curl -X POST https://akibapamoja-backend.onrender.com/api/users/auth/logout/ \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+```
 
 ## Response
 
-Details pending.
+### 200 OK
+
+Session terminated successfully. Both the access and refresh tokens are invalidated.
+
+```json
+{
+  "detail": "Successfully logged out."
+}
+```
+
+### 401 Unauthorized
+
+Token is missing, expired, or invalid.
+
+```json
+{
+  "detail": "Authentication credentials were not provided."
+}
+```
+
+## Notes
+
+- Tokens cannot be reused after logout.
+- If you only want to rotate tokens without ending the session, use the [Refresh Token](/docs/api/users_auth_refresh_create) endpoint instead.

@@ -5,7 +5,8 @@
 .contentlayer
 .content-collections
 .source
-openapi.json
+# OpenAPI spec (root level only; public/api/ is tracked)
+/openapi.json
 
 # test & build
 /coverage

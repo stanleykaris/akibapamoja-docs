@@ -41,7 +41,7 @@ setInterval(() => {
   }
 }, WINDOW_MS * 2);
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const ip = getIp(request);
   const { allowed, remaining, resetTime } = checkRateLimit(ip);
 

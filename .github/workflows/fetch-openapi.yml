@@ -1,0 +1,46 @@
+name: Fetch OpenAPI Spec
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  fetch-openapi:
+    name: Update OpenAPI Spec
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Fetch OpenAPI spec
+        id: fetch
+        run: |
+          mkdir -p public/api
+          curl -s -o public/api/openapi.json "https://akibapamoja-backend.onrender.com/api/schema/"
+          if [ $? -ne 0 ]; then
+            echo "Failed to fetch OpenAPI spec"
+            exit 1
+          fi
+          git diff --quiet public/api/openapi.json 2>/dev/null && echo "changed=false" >> $GITHUB_OUTPUT || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Create Pull Request
+        if: steps.fetch.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'chore(api): update OpenAPI spec from backend'
+          title: 'chore(api): update OpenAPI spec'
+          body: |
+            Auto-generated PR to update the OpenAPI spec from the backend.
+
+            Source: https://akibapamoja-backend.onrender.com/api/schema/
+          branch: bot/openapi-spec-update
+          base: main
+          delete-branch: true
