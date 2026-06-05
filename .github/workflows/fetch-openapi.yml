@@ -44,3 +44,4 @@ jobs:
           branch: bot/openapi-spec-update
           base: main
           delete-branch: true
+          push-to-fork: false
